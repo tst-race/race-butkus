@@ -1,0 +1,18 @@
+# For Command Line Interface
+click
+
+# For arithmetic calculations
+numpy
+
+# For Crypto related modules
+pycryptodome
+
+# For GPT based language models
+transformers
+torch
+
+# For fixed point calculations
+fixedint
+
+# For generating the documentation
+Sphinx

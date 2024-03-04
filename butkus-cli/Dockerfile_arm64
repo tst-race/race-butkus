@@ -1,0 +1,19 @@
+FROM arm64v8/ubuntu
+
+RUN apt update -y
+RUN apt install python3 -y
+RUN apt install python3.10-venv -y
+
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+WORKDIR /usr/src/MB-FTE
+
+# Build the python dependencies.
+COPY ./deps.txt .
+RUN pip install --no-cache-dir -r deps.txt
+
+# Grab the pretrained model, so we only have to do it once at build time.
+RUN python3 -c "import transformers; transformers.GPT2LMHeadModel(transformers.GPT2Config()).from_pretrained(\"gpt2\")"
+RUN python3 -c "import transformers; transformers.GPT2TokenizerFast.from_pretrained(\"gpt2\")"
